@@ -1,10 +1,10 @@
 package com.nmerris.weektwoproject.repositories;
 
 
-import com.nmerris.weektwoproject.models.Applicant;
+import com.nmerris.weektwoproject.models.Resume;
 import org.springframework.data.repository.CrudRepository;
 
-public interface ResumeRepository extends CrudRepository<Applicant, Long> {
+public interface ResumeRepository extends CrudRepository<Resume, Long> {
 
     // can add cool custom methods here, ie
     // call this a 'query by method'

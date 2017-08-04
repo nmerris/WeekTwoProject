@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import java.util.Date;
 
-public class Applicant {
+public class Resume {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

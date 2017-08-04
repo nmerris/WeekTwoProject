@@ -1,8 +1,10 @@
 package com.nmerris.weektwoproject.controllers;
 
-import javax.persistence.Id;
+
 import javax.validation.Valid;
 
+import com.nmerris.weektwoproject.models.Resume;
+import com.nmerris.weektwoproject.repositories.ResumeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,87 +26,45 @@ public class MainController
 
 
     @GetMapping("/index")
-    public String indexPage(Model model)
+    public String indexPageGet(Model model)
     {
-
-        model.addAttribute("welcomemessage","Welcome to this book DB");
+        model.addAttribute("welcomeMessage","Welcome to Robo Resume!");
         return "index";
     }
 
 
-    @GetMapping("/addbook")
+    @GetMapping("/addresume")
     public String addBook(Model model)
     {
-        model.addAttribute("newbook", new Book());
-
-        model.addAttribute("addbookmessage","please add book");
-        return "addbook";
+        model.addAttribute("newResume", new Resume());
+        model.addAttribute("addResume","Add a resume");
+        return "addresume";
     }
 
-    @PostMapping("/addbook")
-    public String postProduct(@Valid @ModelAttribute("newbook") Book book, BindingResult bindingResult)
+
+    @PostMapping("/addresume")
+    public String postProduct(@Valid @ModelAttribute("newResume") Resume resume, BindingResult bindingResult)
     {
-        if (bindingResult.hasErrors()){
-            return "addbook";
+        // display the same page again if any input validation errors found
+        // the error messages are handled in addresume.html with Thymeleaf
+        if (bindingResult.hasErrors()) {
+            return "addresume";
         }
-        bookRepository.save(book); // save it to the db
-        return "bookadditionconfirmation";
+
+        // to get here, must have entered valid form data, so save it to db
+        resumeRepository.save(resume);
+        return "resumeaddedconfirmation";
     }
 
 
-    @GetMapping("/displayallbooks")
+    @GetMapping("/displayallresumes")
     public String displayBooks(Model model)
     {
-        Iterable<Book> bookList = bookRepository.findAll();
-        model.addAttribute("books",bookList);
-        return "displayallbooks";
-
-
-    }
-    // this method is called when the user clicks on the LoadBooks link from the index page
-    // there is no new page to go to, all it does is load the db with a list of predefined books
-    // all this happens righ here
-    @GetMapping("/loadbooks")
-    public String loadExampleBooks()
-    {
-        // get all the books from out db
-//        Iterable<Book> bookList = bookRepository.findAll();
-
-        // save all out books to the db in one shot
-        bookRepository.save(loadSampleBooks());
-        return "allbooksloadedconfirmation";
+        // get every resume from db
+        Iterable<Resume> resumeList = resumeRepository.findAll();
+        model.addAttribute("allResumes", resumeList);
+        return "displayallresumes";
     }
 
-    private ArrayList<Book> loadSampleBooks(){
-
-        ArrayList<Book> myBooks = new ArrayList<Book>();
-
-        int length = Array.getLength(sampleSkus);
-
-        for(int i = 0; i < length; i++) {
-            Book newBook = new Book();
-
-            newBook.setSku(sampleSkus[i]);
-            newBook.setAuthor(sampleAuthors[i]);
-            newBook.setTitle(sampleTitles[i]);
-            newBook.setDescription(sampleDescription[i]);
-            newBook.setPrice(samplePrice[i]);
-
-            myBooks.add(newBook);
-
-
-        }
-
-
-        return myBooks;
-    }
-
-
-//
-//    @GetMapping("/bookadditionconfirmation")
-//    public String confirmBook()
-//    {
-//       return "bookadditionconfirmation";
-//    }
 
 }
