@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--TODO: remove -fallbacks-->
+<head>
+    <title th:text="${addResumeTitle}">Robo Resume-fallback</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+</head>
+
+<body>
+<h1 th:text="${addResumeHeading}">Enter resume details-fallback</h1>
+
+<form action="#" th:action="@{/addresume}" th:object="${newResume}" method="post">
+    <p><span th:text="${firstNameFormTitle}"></span><input type="text" th:field="*{nameFirst}"/></p>
+    <p><span th:text="${lastNameFormTitle}"></span><input type="text" th:field="*{nameLast}"/></p>
+    <p><span th:text="${emailFormTitle}"></span><input type="text" th:field="*{email}"/></p>
+    <p><span th:text="${orgFormTitle}"></span><input type="text" th:field="*{organization}"/></p>
+    <p><span th:text="${dateStartFormTitle}"></span><input type="text" th:field="*{dateStart}"/></p>
+    <p><span th:text="${dateEndFormTitle}"></span><input type="text" th:field="*{dateEnd}"/></p>
+
+    <input type="submit" value="Add Resume"/>
+    <input type="reset" value="Reset"/>
+
+</form>
+
+</body>
+
+</html>

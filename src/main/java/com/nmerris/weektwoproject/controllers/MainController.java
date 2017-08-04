@@ -21,6 +21,8 @@ import java.util.Iterator;
 public class MainController
 {
 
+    // TODO: maybe extract all the Strings and put them in their own Class?
+
     @Autowired
     ResumeRepository resumeRepository;
 
@@ -41,7 +43,18 @@ public class MainController
     public String addBook(Model model)
     {
         model.addAttribute("newResume", new Resume());
-        model.addAttribute("addResume","Add a resume");
+
+        model.addAttribute("addResumeHeading", "Enter resume details");
+        model.addAttribute("addResumeTitle", "Robo Resume");
+        model.addAttribute("firstNameFormTitle", "First Name: ");
+        model.addAttribute("lastNameFormTitle", "Last Name: ");
+        model.addAttribute("emailFormTitle", "Email: ");
+        model.addAttribute("orgFormTitle", "Organization: ");
+        model.addAttribute("dateStartFormTitle", "Start Date: ");
+        model.addAttribute("dateEndFormTitle", "End Date: ");
+
+
+
         return "addresume";
     }
 
