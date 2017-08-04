@@ -23,6 +23,8 @@ public class Resume {
     @NotNull
     private Date dateStart;
 
+    private String email;
+
     // thymeleaf can handle Java Date objects!
     //    Bean validation doesn't matter, you should use Thymeleaf formatting:
 //
@@ -34,8 +36,8 @@ public class Resume {
     // ok to be null, assume currently employed
     private Date dateEnd;
 
+    // ok to be null
     @Max(99)
-    @NotNull
     private String organization;
 
 
@@ -78,6 +80,14 @@ public class Resume {
 
     public void setOrganization(String organization) {
         this.organization = organization;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 
