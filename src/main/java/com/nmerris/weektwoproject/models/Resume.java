@@ -7,11 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
-import java.util.Date;
 
 @Entity
 public class Resume {
 
+
+
+    // TODO: id is not auto incrementing, must fix this
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -22,8 +24,9 @@ public class Resume {
     @NotNull
     private String nameLast;
 
+//    @DateTimeFormat
     @NotNull
-    private Date dateStart;
+    private String dateStart;
 
     private String email;
 
@@ -36,10 +39,10 @@ public class Resume {
 //    Output will be like: 04-Oct-2016
 
     // ok to be null, assume currently employed
-    private Date dateEnd;
+    private String dateEnd;
 
     // ok to be null
-    @Max(99)
+//    @Max(99)
     private String organization;
 
 
@@ -60,19 +63,19 @@ public class Resume {
         this.nameLast = nameLast;
     }
 
-    public Date getDateStart() {
+    public String getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(String dateStart) {
         this.dateStart = dateStart;
     }
 
-    public Date getDateEnd() {
+    public String getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(String dateEnd) {
         this.dateEnd = dateEnd;
     }
 
@@ -90,6 +93,14 @@ public class Resume {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
 

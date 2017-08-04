@@ -44,6 +44,11 @@ public class MainController
     {
         model.addAttribute("newResume", new Resume());
 
+        // I am attempting to keep all Strings out of the HTML files
+        // so that, for example, translating would be easier
+        // this is how I was taught to do it in Android, and it
+        // makes sense to me to do it here too.. also really good
+        // practive with Thymeleaf
         model.addAttribute("addResumeHeading", "Enter resume details");
         model.addAttribute("addResumeTitle", "Robo Resume");
         model.addAttribute("firstNameFormTitle", "First Name: ");
@@ -53,8 +58,6 @@ public class MainController
         model.addAttribute("dateStartFormTitle", "Start Date: ");
         model.addAttribute("dateEndFormTitle", "End Date: ");
 
-
-
         return "addresume";
     }
 
@@ -62,11 +65,14 @@ public class MainController
     @PostMapping("/addresume")
     public String postProduct(@Valid @ModelAttribute("newResume") Resume resume, BindingResult bindingResult)
     {
+        // TODO: add validation stuff to addresume.html
         // display the same page again if any input validation errors found
         // the error messages are handled in addresume.html with Thymeleaf
-        if (bindingResult.hasErrors()) {
-            return "addresume";
-        }
+//        if (bindingResult.hasErrors()) {
+//            return "addresume";
+//        }
+
+        System.out.println("*********************************Resume: " + resume.getId() + "first name: " + resume.getNameFirst());
 
         // to get here, must have entered valid form data, so save it to db
         resumeRepository.save(resume);

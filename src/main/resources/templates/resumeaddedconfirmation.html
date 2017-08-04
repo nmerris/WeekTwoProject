@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Robo Resume</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+</head>
+<body>
+<h1>Resume added successfully!</h1>
+
+<!--  -->
+<p th:text="'First Name: ' + ${newResume.nameFirst}"/>
+<p th:text="'Last Name: ' + ${newResume.nameLast}"/>
+<p th:text="'Email: ' + ${newResume.email}"/>
+<p th:text="'Organization: ' + ${newResume.organization}"/>
+<p th:text="'Start Date: ' + ${newResume.dateStart}"/>
+<p th:text="'End Date: ' + ${newResume.dateEnd}"/>
+
+
+<!--initiates a GET back to /addproduct-->
+<a href="/addresume">Add another resume</a>
+</body>
+</html>
