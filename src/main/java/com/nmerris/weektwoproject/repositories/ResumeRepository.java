@@ -1,6 +1,5 @@
 package com.nmerris.weektwoproject.repositories;
 
-
 import com.nmerris.weektwoproject.models.Resume;
 import org.springframework.data.repository.CrudRepository;
 

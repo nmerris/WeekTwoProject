@@ -28,7 +28,11 @@ public class MainController
     @GetMapping("/index")
     public String indexPageGet(Model model)
     {
+        model.addAttribute("indexTitle","Robo Resume");
         model.addAttribute("welcomeMessage","Welcome to Robo Resume!");
+        model.addAttribute("addResumeLinkText","Add resume");
+        model.addAttribute("displayAllResumesLinkText","Display all resumes");
+
         return "index";
     }
 
