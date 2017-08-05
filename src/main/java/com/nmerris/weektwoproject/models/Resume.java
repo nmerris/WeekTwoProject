@@ -1,6 +1,12 @@
 package com.nmerris.weektwoproject.models;
 
 import com.sun.istack.internal.NotNull;
+import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import static com.nmerris.weektwoproject.utilities.Utilities.setDefaultLocaleToUsSpanish;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,44 +14,48 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Size;
+import java.applet.AppletContext;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @Entity
 public class Resume {
 
+    // the pattern to validate for date entries
+    private static final String DATE_PATTERN = "MM/dd/yyyy";
 
 
-    // TODO: id is not auto incrementing, must fix this
+    // TODO: id is not auto incrementing, must fix this.. actually changing application.properties file fixes this
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    // suppress the default error message because we want to use our own locale specific message
     @NotNull
-    @Size(min = 1, max = 40)
+    @Size(min = 1, max = 40, message = "")
     private String nameFirst;
 
     @NotNull
+    @Size(min = 1, max = 40, message = "")
     private String nameLast;
 
-//    @DateTimeFormat
-    @NotNull
-    private String dateStart;
-
+    // email can be null, but if user enters anything it will be validated
+    @Email
     private String email;
 
-    // thymeleaf can handle Java Date objects!
-    //    Bean validation doesn't matter, you should use Thymeleaf formatting:
-//
-//<td th:text="${#dates.format(sprint.releaseDate, 'dd-MMM-yyyy')}"></td>
-//    Also make sure your releaseDate property is java.util.Date.
-//
-//    Output will be like: 04-Oct-2016
+    // ok to be null
+    private String organization;
 
-    // ok to be null, assume currently employed
+    // require the date be of a given format, ie 07/04/1776 = July 4th, 1776
+    @NotNull
+    @DateTimeFormat(pattern = DATE_PATTERN)
+    private String dateStart;
+
+    // ok to be null, if so assume currently employed
+    // but if user enters anything, it will be validated
+    @DateTimeFormat(pattern = DATE_PATTERN)
     private String dateEnd;
 
-    // ok to be null
-//    @Max(99)
-    private String organization;
 
 
 

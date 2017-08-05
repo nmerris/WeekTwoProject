@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static com.nmerris.weektwoproject.utilities.Utilities.setDefaultLocaleToUsSpanish;
+
+// define this class as a 'Spring bean'
 @Controller
 public class MainController
 {
@@ -50,18 +49,13 @@ public class MainController
 
         model.addAttribute("newResume", new Resume());
 
-
-        model.addAttribute("addResumeHeading", rb.getString("addResumeHeading"));
-        model.addAttribute("addResumeTitle", rb.getString("addResumeTitle"));
-        model.addAttribute("firstNameFormTitle", rb.getString("firstNameFormTitle"));
-        model.addAttribute("lastNameFormTitle", rb.getString("lastNameFormTitle"));
-        model.addAttribute("emailFormTitle", rb.getString("emailFormTitle"));
-        model.addAttribute("orgFormTitle", rb.getString("orgFormTitle"));
-        model.addAttribute("dateStartFormTitle", rb.getString("dateStartFormTitle"));
-        model.addAttribute("dateEndFormTitle", rb.getString("dateEndFormTitle"));
+        // add all generic attributes to model
+        addGenericAttributesToAddBookModel(model, rb);
 
         return "addresume";
     }
+
+
 
 
     @PostMapping("/addresume")
@@ -72,7 +66,15 @@ public class MainController
         if (bindingResult.hasErrors()) {
             System.out.println("**************************************** VALIDATION ERROR ************************");
 
-            model.addAttribute("firstNameFormTitle", rb.getString("firstNameFormTitle"));
+            addGenericAttributesToAddBookModel(model, rb);
+
+            // here we need to add error specific attributes
+            // handles both first and last name errors (same error msg in each case)
+            model.addAttribute("nameFormError", rb.getString("nameFormError"));
+            model.addAttribute("emailFormError", rb.getString("emailFormError"));
+            model.addAttribute("dateFormError", rb.getString("dateFormError"));
+
+
 
             return "addresume";
         }
@@ -94,10 +96,17 @@ public class MainController
     }
 
 
-    private ResourceBundle setDefaultLocaleToUsSpanish() {
-        Locale.setDefault(new Locale("es", "US"));
-        System.out.println("*********************************** default locale is now: " + Locale.getDefault());
-        return ResourceBundle.getBundle("Messages");
+    // many of the text in the addresume page is the same for both GET and POST routes
+    // don't want to repeat myself, so extracted them to this method
+    private void addGenericAttributesToAddBookModel(Model model, ResourceBundle rb) {
+        model.addAttribute("addResumeHeading", rb.getString("addResumeHeading"));
+        model.addAttribute("addResumeTitle", rb.getString("addResumeTitle"));
+        model.addAttribute("firstNameFormTitle", rb.getString("firstNameFormTitle"));
+        model.addAttribute("lastNameFormTitle", rb.getString("lastNameFormTitle"));
+        model.addAttribute("emailFormTitle", rb.getString("emailFormTitle"));
+        model.addAttribute("orgFormTitle", rb.getString("orgFormTitle"));
+        model.addAttribute("dateStartFormTitle", rb.getString("dateStartFormTitle"));
+        model.addAttribute("dateEndFormTitle", rb.getString("dateEndFormTitle"));
     }
 
 

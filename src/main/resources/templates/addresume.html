@@ -16,14 +16,35 @@
     <p>
         <span th:text="${firstNameFormTitle}"></span>
         <input type="text" th:field="*{nameFirst}"/>
-        <span th:if="${#fields.hasErrors('nameFirst')}" th:errors="*{nameFirst}">Please enter a first name -fallback</span>
+        <span th:if="${#fields.hasErrors('nameFirst')}" th:errors="*{nameFirst}" th:text="${nameFormError}">Must be between 1 and 40 characters -fallback</span>
     </p>
 
-    <p><span th:text="${lastNameFormTitle}"></span><input type="text" th:field="*{nameLast}"/></p>
-    <p><span th:text="${emailFormTitle}"></span><input type="text" th:field="*{email}"/></p>
+    <p>
+        <span th:text="${lastNameFormTitle}"></span>
+        <input type="text" th:field="*{nameLast}"/>
+        <span th:if="${#fields.hasErrors('nameLast')}" th:errors="*{nameLast}" th:text="${nameFormError}"></span>
+    </p>
+
+    <p>
+        <span th:text="${emailFormTitle}"></span>
+        <input type="text" th:field="*{email}"/>
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:text="${emailFormError}"></span>
+    </p>
+
     <p><span th:text="${orgFormTitle}"></span><input type="text" th:field="*{organization}"/></p>
-    <p><span th:text="${dateStartFormTitle}"></span><input type="text" th:field="*{dateStart}"/></p>
-    <p><span th:text="${dateEndFormTitle}"></span><input type="text" th:field="*{dateEnd}"/></p>
+
+    <p>
+        <span th:text="${dateStartFormTitle}"></span>
+        <input type="text" th:field="*{dateStart}"/>
+        <span th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}" th:text="${dateFormError}"></span>
+    </p>
+
+    <p>
+        <span th:text="${dateEndFormTitle}"></span>
+        <input type="text" th:field="*{dateEnd}"/>
+        <span th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}" th:text="${dateFormError}"></span>
+    </p>
+
 
     <input type="submit" value="Add Resume"/>
     <input type="reset" value="Reset"/>
