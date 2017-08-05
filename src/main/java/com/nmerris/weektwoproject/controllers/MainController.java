@@ -23,9 +23,6 @@ import java.util.ResourceBundle;
 public class MainController
 {
 
-//    private ResourceBundle rb = ResourceBundle.getBundle("Messages");
-
-
     @Autowired
     ResumeRepository resumeRepository;
 
@@ -33,10 +30,13 @@ public class MainController
     @GetMapping("/index")
     public String indexPageGet(Model model)
     {
-        model.addAttribute("indexTitle","Robo Resume");
-        model.addAttribute("welcomeMessage","Welcome to Robo Resume!");
-        model.addAttribute("addResumeLinkText","Add resume");
-        model.addAttribute("displayAllResumesLinkText","Display all resumes");
+        // TODO add a link in index that changes the language to us spanish
+        ResourceBundle rb = setDefaultLocaleToUsSpanish();
+
+        model.addAttribute("indexTitle",rb.getString("indexTitle"));
+        model.addAttribute("welcomeMessage",rb.getString("welcomeMessage"));
+        model.addAttribute("addResumeLinkText",rb.getString("addResumeLinkText"));
+        model.addAttribute("displayAllResumesLinkText",rb.getString("displayAllResumesLinkText"));
 
         return "index";
     }
@@ -45,28 +45,20 @@ public class MainController
     @GetMapping("/addresume")
     public String addBook(Model model)
     {
-
-        Locale.setDefault(new Locale("es", "US"));
-        System.out.println("*********************************** default locale: " + Locale.getDefault());
-        ResourceBundle rb = ResourceBundle.getBundle("Messages");
+        ResourceBundle rb = setDefaultLocaleToUsSpanish();
 
 
         model.addAttribute("newResume", new Resume());
 
-        // I am attempting to keep all Strings out of the HTML files
-        // so that, for example, translating would be easier
-        // this is how I was taught to do it in Android, and it
-        // makes sense to me to do it here too.. also really good
-        // practive with Thymeleaf
-        model.addAttribute("addResumeHeading", "Enter resume details");
-        model.addAttribute("addResumeTitle", "Robo Resume");
+
+        model.addAttribute("addResumeHeading", rb.getString("addResumeHeading"));
+        model.addAttribute("addResumeTitle", rb.getString("addResumeTitle"));
         model.addAttribute("firstNameFormTitle", rb.getString("firstNameFormTitle"));
-//        model.addAttribute("firstNameFormTitle", "First Name: ");
-        model.addAttribute("lastNameFormTitle", "Last Name: ");
-        model.addAttribute("emailFormTitle", "Email: ");
-        model.addAttribute("orgFormTitle", "Organization: ");
-        model.addAttribute("dateStartFormTitle", "Start Date: ");
-        model.addAttribute("dateEndFormTitle", "End Date: ");
+        model.addAttribute("lastNameFormTitle", rb.getString("lastNameFormTitle"));
+        model.addAttribute("emailFormTitle", rb.getString("emailFormTitle"));
+        model.addAttribute("orgFormTitle", rb.getString("orgFormTitle"));
+        model.addAttribute("dateStartFormTitle", rb.getString("dateStartFormTitle"));
+        model.addAttribute("dateEndFormTitle", rb.getString("dateEndFormTitle"));
 
         return "addresume";
     }
@@ -75,11 +67,12 @@ public class MainController
     @PostMapping("/addresume")
     public String postProduct(@Valid @ModelAttribute("newResume") Resume resume, BindingResult bindingResult, Model model)
     {
+        ResourceBundle rb = setDefaultLocaleToUsSpanish();
 
         if (bindingResult.hasErrors()) {
             System.out.println("**************************************** VALIDATION ERROR ************************");
 
-            model.addAttribute("firstNameFormTitle", "Please enter a first name: ");
+            model.addAttribute("firstNameFormTitle", rb.getString("firstNameFormTitle"));
 
             return "addresume";
         }
@@ -98,6 +91,13 @@ public class MainController
         Iterable<Resume> resumeList = resumeRepository.findAll();
         model.addAttribute("allResumes", resumeList);
         return "displayallresumes";
+    }
+
+
+    private ResourceBundle setDefaultLocaleToUsSpanish() {
+        Locale.setDefault(new Locale("es", "US"));
+        System.out.println("*********************************** default locale is now: " + Locale.getDefault());
+        return ResourceBundle.getBundle("Messages");
     }
 
 
