@@ -11,7 +11,14 @@
 <h1 th:text="${addResumeHeading}">Enter resume details-fallback</h1>
 
 <form action="#" th:action="@{/addresume}" th:object="${newResume}" method="post">
-    <p><span th:text="${firstNameFormTitle}"></span><input type="text" th:field="*{nameFirst}"/></p>
+
+
+    <p>
+        <span th:text="${firstNameFormTitle}"></span>
+        <input type="text" th:field="*{nameFirst}"/>
+        <span th:if="${#fields.hasErrors('nameFirst')}" th:errors="*{nameFirst}">Please enter a first name -fallback</span>
+    </p>
+
     <p><span th:text="${lastNameFormTitle}"></span><input type="text" th:field="*{nameLast}"/></p>
     <p><span th:text="${emailFormTitle}"></span><input type="text" th:field="*{email}"/></p>
     <p><span th:text="${orgFormTitle}"></span><input type="text" th:field="*{organization}"/></p>

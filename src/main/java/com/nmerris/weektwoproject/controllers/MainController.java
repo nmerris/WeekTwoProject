@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @Controller
 public class MainController
 {
 
-    // TODO: maybe extract all the Strings and put them in their own Class?
+//    private ResourceBundle rb = ResourceBundle.getBundle("Messages");
+
 
     @Autowired
     ResumeRepository resumeRepository;
@@ -42,6 +45,12 @@ public class MainController
     @GetMapping("/addresume")
     public String addBook(Model model)
     {
+
+        Locale.setDefault(new Locale("es", "US"));
+        System.out.println("*********************************** default locale: " + Locale.getDefault());
+        ResourceBundle rb = ResourceBundle.getBundle("Messages");
+
+
         model.addAttribute("newResume", new Resume());
 
         // I am attempting to keep all Strings out of the HTML files
@@ -51,7 +60,8 @@ public class MainController
         // practive with Thymeleaf
         model.addAttribute("addResumeHeading", "Enter resume details");
         model.addAttribute("addResumeTitle", "Robo Resume");
-        model.addAttribute("firstNameFormTitle", "First Name: ");
+        model.addAttribute("firstNameFormTitle", rb.getString("firstNameFormTitle"));
+//        model.addAttribute("firstNameFormTitle", "First Name: ");
         model.addAttribute("lastNameFormTitle", "Last Name: ");
         model.addAttribute("emailFormTitle", "Email: ");
         model.addAttribute("orgFormTitle", "Organization: ");
@@ -63,16 +73,17 @@ public class MainController
 
 
     @PostMapping("/addresume")
-    public String postProduct(@Valid @ModelAttribute("newResume") Resume resume, BindingResult bindingResult)
+    public String postProduct(@Valid @ModelAttribute("newResume") Resume resume, BindingResult bindingResult, Model model)
     {
-        // TODO: add validation stuff to addresume.html
-        // display the same page again if any input validation errors found
-        // the error messages are handled in addresume.html with Thymeleaf
-//        if (bindingResult.hasErrors()) {
-//            return "addresume";
-//        }
 
-        System.out.println("*********************************Resume: " + resume.getId() + "first name: " + resume.getNameFirst());
+        if (bindingResult.hasErrors()) {
+            System.out.println("**************************************** VALIDATION ERROR ************************");
+
+            model.addAttribute("firstNameFormTitle", "Please enter a first name: ");
+
+            return "addresume";
+        }
+
 
         // to get here, must have entered valid form data, so save it to db
         resumeRepository.save(resume);
