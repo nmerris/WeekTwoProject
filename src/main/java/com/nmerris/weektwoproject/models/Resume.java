@@ -2,21 +2,11 @@ package com.nmerris.weektwoproject.models;
 
 import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.Email;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import static com.nmerris.weektwoproject.utilities.Utilities.setDefaultLocaleToUsSpanish;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Max;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.applet.AppletContext;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Date;
 
 @Entity
 public class Resume {
@@ -48,8 +38,9 @@ public class Resume {
 
     // require the date be of a given format, ie 07/04/1776 = July 4th, 1776
     @NotNull
+    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = DATE_PATTERN)
-    private String dateStart;
+    private Date dateStart;
 
     // ok to be null, if so assume currently employed
     // but if user enters anything, it will be validated
@@ -75,11 +66,11 @@ public class Resume {
         this.nameLast = nameLast;
     }
 
-    public String getDateStart() {
+    public Date getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(String dateStart) {
+    public void setDateStart(Date dateStart) {
         this.dateStart = dateStart;
     }
 

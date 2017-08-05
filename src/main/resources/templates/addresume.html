@@ -35,8 +35,12 @@
 
     <p>
         <span th:text="${dateStartFormTitle}"></span>
-        <input type="text" th:field="*{dateStart}"/>
-        <span th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}" th:text="${dateFormError}"></span>
+        <input type="date"
+               th:field="*{dateStart}"
+               th:class="${#fields.hasErrors('dateStart')}? dateFormError"/>
+
+        <!--<span th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}"></span>-->
+        <!--<span th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}" th:text="${dateFormError}"></span>-->
     </p>
 
     <p>
@@ -46,6 +50,7 @@
     </p>
 
 
+    <!--TODO add locale stuff below-->
     <input type="submit" value="Add Resume"/>
     <input type="reset" value="Reset"/>
 
