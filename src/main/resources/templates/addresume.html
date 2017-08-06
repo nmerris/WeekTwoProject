@@ -3,50 +3,47 @@
 
 <!--TODO: remove -fallbacks-->
 <head>
-    <title th:text="${addResumeTitle}">Robo Resume-fallback</title>
+    <title th:text="#{addResumeTitle}">Robo Resume-fallback</title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 </head>
 
 <body>
-<h1 th:text="${addResumeHeading}">Enter resume details-fallback</h1>
+<h1 th:text="#{addResumeHeading}">Enter resume details-fallback</h1>
 
 <form action="#" th:action="@{/addresume}" th:object="${newResume}" method="post">
 
 
     <p>
-        <span th:text="${firstNameFormTitle}"></span>
+        <span th:text="#{firstNameFormTitle}"></span>
         <input type="text" th:field="*{nameFirst}"/>
-        <span th:if="${#fields.hasErrors('nameFirst')}" th:errors="*{nameFirst}" th:text="${nameFormError}">Must be between 1 and 40 characters -fallback</span>
+        <span th:if="${#fields.hasErrors('nameFirst')}" th:errors="*{nameFirst}">Must be between 1 and 40 characters -fallback</span>
     </p>
 
     <p>
-        <span th:text="${lastNameFormTitle}"></span>
+        <span th:text="#{lastNameFormTitle}"></span>
         <input type="text" th:field="*{nameLast}"/>
-        <span th:if="${#fields.hasErrors('nameLast')}" th:errors="*{nameLast}" th:text="${nameFormError}"></span>
+        <span th:if="${#fields.hasErrors('nameLast')}" th:errors="*{nameLast}"></span>
     </p>
 
     <p>
-        <span th:text="${emailFormTitle}"></span>
+        <span th:text="#{emailFormTitle}"></span>
         <input type="text" th:field="*{email}"/>
-        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:text="${emailFormError}"></span>
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
     </p>
 
-    <p><span th:text="${orgFormTitle}"></span><input type="text" th:field="*{organization}"/></p>
+    <p><span th:text="#{orgFormTitle}"></span><input type="text" th:field="*{organization}"/></p>
 
     <p>
-        <span th:text="${dateStartFormTitle}"></span>
-        <input type="date"
-               th:field="*{dateStart}"
-               th:class="${#fields.hasErrors('dateStart')}? dateFormError"/>
+        <span th:text="#{dateStartFormTitle}"></span>
+        <input type="text" th:field="*{dateStart}"/>
+        <span th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}"></span>
 
-        <!--<span th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}"></span>-->
-        <!--<span th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}" th:text="${dateFormError}"></span>-->
     </p>
 
     <p>
-        <span th:text="${dateEndFormTitle}"></span>
+        <span th:text="#{dateEndFormTitle}"></span>
         <input type="text" th:field="*{dateEnd}"/>
-        <span th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}" th:text="${dateFormError}"></span>
+        <span th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}"></span>
     </p>
 
 
