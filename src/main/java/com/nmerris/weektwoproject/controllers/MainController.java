@@ -48,36 +48,51 @@ public class MainController
         Date dateStart = new Date();
         Date dateEnd = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(Resume.DATE_PATTERN);
+        // must setLenient or it will take bogus dates like 0/0/0
+        dateFormat.setLenient(false);
         int diffInDays;
 
-        boolean startDateEmpty, endDateEmpty, startDateInvalid, endDateInvalid, startDateIsTenChars, endDateIsTenChars;
-        startDateEmpty = endDateEmpty = startDateInvalid = endDateInvalid = startDateIsTenChars = endDateIsTenChars = false;
-        int dateStartLength = resume.getDateStart().length();
+        boolean startDateInvalid, endDateInvalid;
+        startDateInvalid = endDateInvalid = false;
         int dateEndLength = resume.getDateEnd().length();
 
 
-        if(dateStartLength == 0) startDateEmpty = true;
-        if(dateEndLength == 0) endDateEmpty = true;
-        if(dateStartLength == 10) startDateIsTenChars = true;
-        if(dateEndLength == 10) endDateIsTenChars = true;
-
-        if(startDateIsTenChars) {
-            try {
-                dateStart = dateFormat.parse(resume.getDateStart());
-            } catch (ParseException e) {
-                startDateInvalid = true;
-            }
+        // catch all start date errors, including empty dates
+        try {
+            dateStart = dateFormat.parse(resume.getDateStart());
+        } catch (ParseException e) {
+            model.addAttribute("dateStartInvalid", true);
+            startDateInvalid = true;
         }
 
-        if(endDateIsTenChars) {
+        // only catch end date errors if user entered at least one char
+        if(dateEndLength > 0) {
             try {
                 dateEnd = dateFormat.parse(resume.getDateEnd());
             } catch (ParseException e) {
+                model.addAttribute("dateEndInvalid", true);
                 endDateInvalid = true;
             }
         }
 
+        // if both dates are valid, calculate the diff in days
+        if(!startDateInvalid && !endDateInvalid) {
+            // TODO: would be nice to make sure that end date is after start date
+            diffInDays = (int) (Math.abs((dateEnd.getTime() - dateStart.getTime()) / (1000 * 60 * 60 * 24)));
 
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!! date diff: " + diffInDays + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+        }
+
+        // the @NotEmpty errors are automatically handled in messages.properties
+        // @NotEmpty errors will show up here in the bindingResult
+        // I am handling date format errors in this method because I have yet to figure out how
+        // to get @DateTimeFormat annotation for the dateStart and dateEnd fields to work
+        // if ANY errors are present, redisplay the addresume page
+        if (bindingResult.hasErrors() || startDateInvalid || endDateInvalid) {
+            System.out.println("**************************************** VALIDATION ERROR ************************");
+            return "addresume";
+        }
 
 
         // both dates are valid at this point
@@ -85,31 +100,9 @@ public class MainController
         // end date is same format if anything was entered, otherwise it is empty, which is ok
 
 
-
-        // * 1000 to convert to seconds
-        // * 60 to convert to minutes
-        // * 60 to convert to hours
-        // * 24 to convert to days
-        // absolute value in case user entered later date first
-        diffInDays = (int) (Math.abs((dateEnd.getTime() - dateStart.getTime()) / (1000 * 60 * 60 * 24)));
-
-
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!! date diff: " + diffInDays + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-
-
-
-        // the @NotEmpty errors are automatically handled in messages.properties
-        // I am handling date format errors in this method because I have yet to figure out how
-        // to get @DateTimeFormat annotation for the dateStart and dateEnd fields to work
-        if (bindingResult.hasErrors()) {
-            System.out.println("**************************************** VALIDATION ERROR ************************");
-            return "addresume";
-        }
-
-
-        // to get here, must have entered valid form data, so save it to db
+        // save it to db
         resumeRepository.save(resume);
+        // display a confirmation page
         return "resumeaddedconfirmation";
     }
 
