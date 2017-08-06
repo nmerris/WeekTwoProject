@@ -12,10 +12,9 @@ import javax.validation.constraints.Size;
 public class Resume {
 
     // the pattern to validate for date entries
-    private static final String DATE_PATTERN = "yyyy-MM-dd";
+    public static final String DATE_PATTERN = "MM/dd/yyyy";
 
 
-    // TODO: id is not auto incrementing, must fix this.. actually changing application.properties file fixes this
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -34,14 +33,12 @@ public class Resume {
     // ok to be null
     private String organization;
 
-    // require the date be of a given format, ie 07/04/1776 = July 4th, 1776
+    // I could not get @DateTimeFormat annotation to validate, so I'm just doing it myself in MainController
+    // must have a start date
     @NotEmpty
-    @DateTimeFormat(pattern = DATE_PATTERN)
     private String dateStart;
 
-    // ok to be null, if so assume currently employed
-    // but if user enters anything, it will be validated
-    @DateTimeFormat(pattern = DATE_PATTERN)
+    // if no end date entered, assume still employed at organization
     private String dateEnd;
 
 
