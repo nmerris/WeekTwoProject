@@ -29,13 +29,13 @@ public class MainController
     @GetMapping("/index")
     public String indexPageGet(Model model)
     {
-        // TODO add a link in index that changes the language to us spanish
-        ResourceBundle rb = setDefaultLocaleToUsSpanish();
-
-        model.addAttribute("indexTitle",rb.getString("indexTitle"));
-        model.addAttribute("welcomeMessage",rb.getString("welcomeMessage"));
-        model.addAttribute("addResumeLinkText",rb.getString("addResumeLinkText"));
-        model.addAttribute("displayAllResumesLinkText",rb.getString("displayAllResumesLinkText"));
+//        // TODO add a link in index that changes the language to us spanish
+//        ResourceBundle rb = setDefaultLocaleToUsSpanish();
+//
+//        model.addAttribute("indexTitle",rb.getString("indexTitle"));
+//        model.addAttribute("welcomeMessage",rb.getString("welcomeMessage"));
+//        model.addAttribute("addResumeLinkText",rb.getString("addResumeLinkText"));
+//        model.addAttribute("displayAllResumesLinkText",rb.getString("displayAllResumesLinkText"));
 
         return "index";
     }
@@ -44,13 +44,13 @@ public class MainController
     @GetMapping("/addresume")
     public String addBook(Model model)
     {
-        ResourceBundle rb = setDefaultLocaleToUsSpanish();
+//        ResourceBundle rb = setDefaultLocaleToUsSpanish();
 
 
         model.addAttribute("newResume", new Resume());
 
         // add all generic attributes to model
-        addGenericAttributesToAddBookModel(model, rb);
+//        addGenericAttributesToAddBookModel(model, rb);
 
         return "addresume";
     }
