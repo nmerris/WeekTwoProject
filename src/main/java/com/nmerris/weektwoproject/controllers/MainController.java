@@ -46,6 +46,8 @@ public class MainController
     public String postProduct(@Valid @ModelAttribute("newResume") Resume resume, BindingResult bindingResult, Model model)
     {
         Date dateStart = new Date();
+
+        // a new Date is initialized to todays date
         Date dateEnd = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat(Resume.DATE_PATTERN);
         // must setLenient or it will take bogus dates like 0/0/0
@@ -108,7 +110,7 @@ public class MainController
     {
         // get every resume from db
         Iterable<Resume> resumeList = resumeRepository.findAll();
-        model.addAttribute("allResumes", resumeList);
+        model.addAttribute("resumes", resumeList);
         return "displayallresumes";
     }
 

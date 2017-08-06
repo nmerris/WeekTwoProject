@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title th:text="#{displayAllResumesTitle}"></title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 </head>
 <body>
+<h1 th:text="#{displayAllResumesHeading}"></h1>
+
+<table th:background="blue">
+    <tr>
+        <td><p th:text="#{firstNameFormTitle}"></p></td>
+        <td><p th:text="#{lastNameFormTitle}"></p></td>
+        <td><p th:text="#{emailFormTitle}"></p></td>
+        <td><p th:text="#{orgFormTitle}"></p></td>
+        <td><p th:text="#{dateStartText}"></p></td>
+        <td><p th:text="#{dateEndText}"></p></td>
+        <td><p th:text="#{employmentDuration}"></p></td>
+    </tr>
+
+    <th:block th:each="aresume:${resumes}">
+        <tr>
+            <td><p th:text="${aresume.nameFirst}"></p></td>
+            <td><p th:text="${aresume.nameLast}"></p></td>
+            <td><p th:text="${aresume.email}"></p></td>
+            <td><p th:text="${aresume.organization}"></p></td>
+            <td><p th:text="${aresume.dateStart}"></p></td>
+            <td><p th:text="${aresume.dateEnd}"></p></td>
+            <td><p th:text="${aresume.employmentDuration}"></p></td>
+        </tr>
+    </th:block>
+</table>
+
+<!--initiates a GET back to /addresume-->
+<a href="/addresume"><p th:text="#{addAnotherResume}"></p></a>
 
 </body>
 </html>
