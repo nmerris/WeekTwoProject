@@ -37,6 +37,9 @@ public class Resume {
     // if no end date entered, assume still employed at organization
     private String dateEnd;
 
+    // in days
+    private long employmentDuration;
+
 
 
 
@@ -96,5 +99,12 @@ public class Resume {
         this.id = id;
     }
 
+    public long getEmploymentDuration() {
+        return employmentDuration;
+    }
+
+    public void setEmploymentDuration(long employmentDuration) {
+        this.employmentDuration = employmentDuration;
+    }
 
 }

@@ -50,7 +50,7 @@ public class MainController
         SimpleDateFormat dateFormat = new SimpleDateFormat(Resume.DATE_PATTERN);
         // must setLenient or it will take bogus dates like 0/0/0
         dateFormat.setLenient(false);
-        int diffInDays;
+        int diffInDays = 0;
 
         boolean startDateInvalid, endDateInvalid;
         startDateInvalid = endDateInvalid = false;
@@ -75,14 +75,6 @@ public class MainController
             }
         }
 
-        // if both dates are valid, calculate the diff in days
-        if(!startDateInvalid && !endDateInvalid) {
-            // TODO: would be nice to make sure that end date is after start date
-            diffInDays = (int) (Math.abs((dateEnd.getTime() - dateStart.getTime()) / (1000 * 60 * 60 * 24)));
-
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!! date diff: " + diffInDays + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-        }
 
         // the @NotEmpty errors are automatically handled in messages.properties
         // @NotEmpty errors will show up here in the bindingResult
@@ -99,9 +91,13 @@ public class MainController
         // date start is exactly 10 chars in MM/DD/YYYY format
         // end date is same format if anything was entered, otherwise it is empty, which is ok
 
+        // TODO: would be nice to make sure that end date is after start date
+        diffInDays = (int) (Math.abs((dateEnd.getTime() - dateStart.getTime()) / (1000 * 60 * 60 * 24)));
+        resume.setEmploymentDuration(diffInDays);
 
         // save it to db
         resumeRepository.save(resume);
+
         // display a confirmation page
         return "resumeaddedconfirmation";
     }

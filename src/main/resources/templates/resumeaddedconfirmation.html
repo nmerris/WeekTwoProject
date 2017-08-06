@@ -1,22 +1,25 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Robo Resume</title>
+    <title th:text="#{addResumeTitle}">Robo Resume-fallback</title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 </head>
 <body>
-<h1>Resume added successfully!</h1>
+<h1 th:text="#{resumeAddSuccess}"></h1>
+
 
 <!--  -->
-<p th:text="'First Name: ' + ${newResume.nameFirst}"/>
-<p th:text="'Last Name: ' + ${newResume.nameLast}"/>
-<p th:text="'Email: ' + ${newResume.email}"/>
-<p th:text="'Organization: ' + ${newResume.organization}"/>
-<p th:text="'Start Date: ' + ${newResume.dateStart}"/>
-<p th:text="'End Date: ' + ${newResume.dateEnd}"/>
+<p th:text="#{firstNameFormTitle} + ${newResume.nameFirst}"></p>
+<p th:text="#{lastNameFormTitle} + ${newResume.nameLast}"></p>
+<p th:text="#{emailFormTitle} + ${newResume.email}"></p>
+<p th:text="#{orgFormTitle} + ${newResume.organization}"></p>
+<p th:text="#{dateStartText} + ${newResume.dateStart}"></p>
+<p th:text="#{dateEndText} + ${newResume.dateEnd}"></p>
+<p th:text="#{employmentDuration} + ${newResume.employmentDuration}"></p>
 
 
-<!--initiates a GET back to /addproduct-->
-<a href="/addresume">Add another resume</a>
+<!--initiates a GET back to /addresume -->
+<a href="/addresume"><p th:text="#{addAnotherResume}"></p></a>
+
 </body>
 </html>
