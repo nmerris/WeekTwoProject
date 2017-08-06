@@ -1,12 +1,10 @@
 package com.nmerris.weektwoproject.models;
 
-import com.sun.istack.internal.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Resume {
@@ -33,9 +31,7 @@ public class Resume {
     // ok to be null
     private String organization;
 
-    // I could not get @DateTimeFormat annotation to validate, so I'm just doing it myself in MainController
-    // must have a start date
-    @NotEmpty
+    // I did my own custom validation for the dates
     private String dateStart;
 
     // if no end date entered, assume still employed at organization

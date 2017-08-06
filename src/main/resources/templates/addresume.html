@@ -37,14 +37,14 @@
         <span th:text="#{dateStartFormTitle}"></span>
         <input type="text"  th:field="*{dateStart}"/>
         <span th:if="${#fields.hasErrors('dateStart')}" th:errors="*{dateStart}"></span>
-
-        <span th:if="${dateStartNotTenChars} == true" th:text="#{dateFormatError}"></span>
+        <span th:if="${dateStartError} == true" th:text="#{dateFormatError}"></span>
     </p>
 
     <p>
         <span th:text="#{dateEndFormTitle}"></span>
         <input type="text" th:field="*{dateEnd}"/>
         <span th:if="${#fields.hasErrors('dateEnd')}" th:errors="*{dateEnd}"></span>
+        <span th:if="${dateEndError} == true" th:text="#{dateFormatError}"></span>
     </p>
 
 

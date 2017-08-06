@@ -45,64 +45,72 @@ public class MainController
     @PostMapping("/addresume")
     public String postProduct(@Valid @ModelAttribute("newResume") Resume resume, BindingResult bindingResult, Model model)
     {
+        Date dateStart = new Date();
+        Date dateEnd = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(Resume.DATE_PATTERN);
+        int diffInDays;
+
+        boolean startDateEmpty, endDateEmpty, startDateInvalid, endDateInvalid, startDateIsTenChars, endDateIsTenChars;
+        startDateEmpty = endDateEmpty = startDateInvalid = endDateInvalid = startDateIsTenChars = endDateIsTenChars = false;
+        int dateStartLength = resume.getDateStart().length();
+        int dateEndLength = resume.getDateEnd().length();
+
+
+        if(dateStartLength == 0) startDateEmpty = true;
+        if(dateEndLength == 0) endDateEmpty = true;
+        if(dateStartLength == 10) startDateIsTenChars = true;
+        if(dateEndLength == 10) endDateIsTenChars = true;
+
+        if(startDateIsTenChars) {
+            try {
+                dateStart = dateFormat.parse(resume.getDateStart());
+            } catch (ParseException e) {
+                startDateInvalid = true;
+            }
+        }
+
+        if(endDateIsTenChars) {
+            try {
+                dateEnd = dateFormat.parse(resume.getDateEnd());
+            } catch (ParseException e) {
+                endDateInvalid = true;
+            }
+        }
 
 
 
-        model.addAttribute("dateStartNotTenChars", true);
-        return "addresume";
-//
-//
-//        // start date is formatted MM/DD/YYYY so any entry that does not have exactly 10 characters is definitely invalid
-//        // note that an EMPTY start date is handled by @NotEmpty in Resume model, so don't need to check here
-//        // so here we need to check if it's between 1-9 or greater than 10, if so, set a boolean flag
-////        if((resume.getDateStart().length() > 1 && resume.getDateStart().length() < 10) || resume.getDateStart().length() > 10) {
-////            model.addAttribute("dateStartNotTenChars", true);
-////            return "addresume";
-////        }
-////        // set the flag to false for good measure
-////        else {
-////            model.addAttribute("dateStartNotTenChars", false);
-////        }
-//
-//        // user entered exactly 10 chars for start date, now check validity
-//        Date dateStart = new Date();
-//        Date dateEnd = new Date();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat(Resume.DATE_PATTERN);
-//        int diffInDays;
-//
-//        try {
-//            dateStart = dateFormat.parse(resume.getDateStart());
-//        } catch (ParseException e) {
-//            // user entered an invalid start date
-//            // set a boolean so that addresume.html will know to display an error
-//            // it will be in the correct language because it will be read from messages.properties
-//
-//        }
-//
-//        // * 1000 to convert to seconds
-//        // * 60 to convert to minutes
-//        // * 60 to convert to hours
-//        // * 24 to convert to days
-//        // absolute value in case user entered later date first
-////        diffInDays = (int) (Math.abs((dateEnd.getTime() - dateStart.getTime()) / (1000 * 60 * 60 * 24)));
-//
-//
-//
-//
-//
-//
-//        // the @NotEmpty errors are automatically handled in messages.properties
-//        // I am handling date format errors here because I have yet to figure out how
-//        // to get @DateTimeFormat annotation for the dateStart and dateEnd fields to work
-//        if (bindingResult.hasErrors()) {
-//            System.out.println("**************************************** VALIDATION ERROR ************************");
-//            return "addresume";
-//        }
-//
-//
-//        // to get here, must have entered valid form data, so save it to db
-//        resumeRepository.save(resume);
-//        return "resumeaddedconfirmation";
+
+        // both dates are valid at this point
+        // date start is exactly 10 chars in MM/DD/YYYY format
+        // end date is same format if anything was entered, otherwise it is empty, which is ok
+
+
+
+        // * 1000 to convert to seconds
+        // * 60 to convert to minutes
+        // * 60 to convert to hours
+        // * 24 to convert to days
+        // absolute value in case user entered later date first
+        diffInDays = (int) (Math.abs((dateEnd.getTime() - dateStart.getTime()) / (1000 * 60 * 60 * 24)));
+
+
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!! date diff: " + diffInDays + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+
+
+
+        // the @NotEmpty errors are automatically handled in messages.properties
+        // I am handling date format errors in this method because I have yet to figure out how
+        // to get @DateTimeFormat annotation for the dateStart and dateEnd fields to work
+        if (bindingResult.hasErrors()) {
+            System.out.println("**************************************** VALIDATION ERROR ************************");
+            return "addresume";
+        }
+
+
+        // to get here, must have entered valid form data, so save it to db
+        resumeRepository.save(resume);
+        return "resumeaddedconfirmation";
     }
 
 
