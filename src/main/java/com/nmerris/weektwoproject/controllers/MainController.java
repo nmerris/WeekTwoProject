@@ -84,7 +84,6 @@ public class MainController
         // to get @DateTimeFormat annotation for the dateStart and dateEnd fields to work
         // if ANY errors are present, redisplay the addresume page
         if (bindingResult.hasErrors() || startDateInvalid || endDateInvalid) {
-            System.out.println("**************************************** VALIDATION ERROR ************************");
             return "addresume";
         }
 
