@@ -7,15 +7,16 @@
 <body>
 <h1 th:text="#{displayAllResumesHeading}">All resumes on file</h1>
 
-<table>
+<!--for this app, appearance stuff is in the HTML, can't wait to learn about CSS and bootstrap!-->
+<table border="1" cellpadding="5">
     <tr>
-        <td><p th:text="#{firstNameFormTitle}">First name</p></td>
-        <td><p th:text="#{lastNameFormTitle}">Last name</p></td>
-        <td><p th:text="#{emailFormTitle}">Email</p></td>
-        <td><p th:text="#{orgFormTitle}">Organization</p></td>
-        <td><p th:text="#{dateStartText}">Start Date</p></td>
-        <td><p th:text="#{dateEndText}">End date</p></td>
-        <td><p th:text="#{employmentDuration}">Employment duration (days)</p></td>
+        <td><b><p th:text="#{firstNameFormTitle}">First name</p></b></td>
+        <td><b><p th:text="#{lastNameFormTitle}">Last name</p></b></td>
+        <td><b><p th:text="#{emailFormTitle}">Email</p></b></td>
+        <td><b><p th:text="#{orgFormTitle}">Organization</p></b></td>
+        <td><b><p th:text="#{dateStartText}">Start Date</p></b></td>
+        <td><b><p th:text="#{dateEndText}">End date</p></b></td>
+        <td><b><p th:text="#{employmentDuration}">Emp duration (days)</p></b></td>
     </tr>
 
     <!--iterate through all the resumes-->
