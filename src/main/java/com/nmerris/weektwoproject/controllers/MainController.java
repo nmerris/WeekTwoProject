@@ -17,10 +17,19 @@ import java.util.Date;
 /**
  * Controls all routes for this app.
  * Append '?lang=es_US' to any URL to switch to Spanish mode.
- * Append '?lang=en_US' to switch to English more.
+ * Append '?lang=en_US' to switch to English mode.
  * If no lang parameter is specified, it will default to English.
+ * For this version of this app, you must manually switch back and forth between languages.
+ * The app will stay in the currently selected language until you switch it again, there is no need
+ * to append the lang parameter to every page.
  * All page text is located in the messages.properties resource bundle, so language switching happens automatically.
  * Locale handling Beans are located in WeektwoprojectApplication.java
+ *
+ * NOTE: For project submission, I have changed the application.properties file so that is creates a brand new table
+ * every time this app is run.  This means all data is lost every time the app is restared.  In addition, in order
+ * for this app to work, you must have a mysql server running on your local machine that has a database called 'resumedb'
+ * To see the app in action, go to http://localhost:8080 for English
+ * or http://localhost:8080?lang=es_US for Spanish
  *
  * @see com.nmerris.weektwoproject.WeektwoprojectApplication
  *
@@ -130,11 +139,12 @@ public class MainController
         return "resumeaddedconfirmation";
     }
 
-
+    /**
+     * Displays a simple table of all resumes currently in the db
+     */
     @GetMapping("/displayallresumes")
     public String displayBooks(Model model)
     {
-        // TODO: make it look nicer!
         // get every resume from db
         Iterable<Resume> resumeList = resumeRepository.findAll();
 
