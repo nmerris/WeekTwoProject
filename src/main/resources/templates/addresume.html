@@ -1,57 +1,54 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<!--TODO: remove -fallbacks-->
 <head>
-    <title th:text="#{addResumeTitle}">Robo Resume-fallback</title>
+    <title th:text="#{addResumeTitle}">Robo Resume</title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 </head>
 
 <body>
-<h1 th:text="#{addResumeHeading}">Enter resume details-fallback</h1>
+<h1 th:text="#{addResumeHeading}">Enter resume details</h1>
 
 <form action="#" th:action="@{/addresume}" th:object="${newResume}" method="post">
 
-
     <p>
-        <span th:text="#{firstNameFormTitle}"></span>
+        <span th:text="#{firstNameFormTitle}">First name: </span>
         <input type="text" th:field="*{nameFirst}"/>
-        <span th:if="${#fields.hasErrors('nameFirst')}" th:errors="*{nameFirst}">Must be between 1 and 40 characters -fallback</span>
+        <span th:if="${#fields.hasErrors('nameFirst')}" th:errors="*{nameFirst}">Please enter a first name</span>
     </p>
 
     <p>
-        <span th:text="#{lastNameFormTitle}"></span>
+        <span th:text="#{lastNameFormTitle}">Last name: </span>
         <input type="text" th:field="*{nameLast}"/>
-        <span th:if="${#fields.hasErrors('nameLast')}" th:errors="*{nameLast}"></span>
+        <span th:if="${#fields.hasErrors('nameLast')}" th:errors="*{nameLast}">Please enter a last name</span>
     </p>
 
     <p>
-        <span th:text="#{emailFormTitle}"></span>
+        <span th:text="#{emailFormTitle}">Email: </span>
         <input type="text" th:field="*{email}"/>
-        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Please enter a valid email</span>
     </p>
 
-    <p><span th:text="#{orgFormTitle}"></span><input type="text" th:field="*{organization}"/></p>
+    <p><span th:text="#{orgFormTitle}">Organization: </span><input type="text" th:field="*{organization}"/></p>
 
     <p>
-        <span th:text="#{dateStartFormTitle}"></span>
+        <span th:text="#{dateStartFormTitle}">Start date: </span>
         <input type="text"  th:field="*{dateStart}"/>
-        <span th:if="${dateStartInvalid}==true" th:text="#{dateFormatError}"></span>
+        <span th:if="${dateStartInvalid}==true" th:text="#{dateFormatError}">Please enter a valid date</span>
     </p>
 
     <p>
-        <span th:text="#{dateEndFormTitle}"></span>
+        <span th:text="#{dateEndFormTitle}">End date: </span>
         <input type="text" th:field="*{dateEnd}"/>
-        <span th:if="${dateEndInvalid}==true" th:text="#{dateFormatError}"></span>
+        <span th:if="${dateEndInvalid}==true" th:text="#{dateFormatError}">Please enter a valid date</span>
     </p>
 
-
-    <!--TODO RESET button does not clear names or start date-->
-    <input type="submit" th:value="#{submitText}"/>
-    <input type="reset" th:value="#{resetText}"/>
+    <!--TODO RESET button does not clear names or start date, sometimes, it's quirky-->
+    <!--value is ignored if th:value is used, it's a fallback to English-->
+    <input type="submit" th:value="#{submitText}" value="Submit"/>
+    <input type="reset" th:value="#{resetText}" value="Reset"/>
 
 </form>
 
 </body>
-
 </html>

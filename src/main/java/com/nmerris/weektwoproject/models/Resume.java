@@ -2,22 +2,28 @@ package com.nmerris.weektwoproject.models;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-
-import javax.persistence.*;
-
+/**
+ * Models a resume
+ *
+ * @author Nathan Merris
+ */
 @Entity
 public class Resume {
 
     // the pattern to validate for date entries
     public static final String DATE_PATTERN = "MM/dd/yyyy";
 
-
+    // automatically generate the id field
+    // note that the db will also generate it's own unique key for each record
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    // suppress the default error message because we want to use our own locale specific message
     @NotEmpty
     private String nameFirst;
 
@@ -33,14 +39,10 @@ public class Resume {
 
     // I did my own custom validation for the dates
     private String dateStart;
-
-    // if no end date entered, assume still employed at organization
     private String dateEnd;
 
     // in days
     private long employmentDuration;
-
-
 
 
     public String getNameFirst() {

@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{resumeAddedTitle}"></title>
+    <title th:text="#{resumeAddedTitle}">Robo Resume</title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 </head>
 
 <body>
-<h1 th:text="#{resumeAddSuccess}"></h1>
+<h1 th:text="#{resumeAddSuccess}">Resume successfully added</h1>
 
 <p th:text="#{firstNameFormTitle} + ${newResume.nameFirst}"></p>
 <p th:text="#{lastNameFormTitle} + ${newResume.nameLast}"></p>
@@ -17,8 +17,8 @@
 <p th:text="#{employmentDuration} + ${newResume.employmentDuration}"></p>
 
 <!--initiates a GET back to /addresume -->
-<a href="/addresume"><p th:text="#{addAnotherResume}"></p></a>
-<a href="/index"><p th:text="#{backToHome}"></p></a>
+<a href="/addresume"><p th:text="#{addAnotherResume}">Add another resume</p></a>
+<a href="/index"><p th:text="#{backToHome}">Back to home</p></a>
 
 </body>
 </html>

@@ -1,23 +1,24 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="#{displayAllResumesTitle}"></title>
+    <title th:text="#{displayAllResumesTitle}">Robo Resume</title>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
 </head>
 <body>
-<h1 th:text="#{displayAllResumesHeading}"></h1>
+<h1 th:text="#{displayAllResumesHeading}">All resumes on file</h1>
 
 <table>
     <tr>
-        <td><p th:text="#{firstNameFormTitle}"></p></td>
-        <td><p th:text="#{lastNameFormTitle}"></p></td>
-        <td><p th:text="#{emailFormTitle}"></p></td>
-        <td><p th:text="#{orgFormTitle}"></p></td>
-        <td><p th:text="#{dateStartText}"></p></td>
-        <td><p th:text="#{dateEndText}"></p></td>
-        <td><p th:text="#{employmentDuration}"></p></td>
+        <td><p th:text="#{firstNameFormTitle}">First name</p></td>
+        <td><p th:text="#{lastNameFormTitle}">Last name</p></td>
+        <td><p th:text="#{emailFormTitle}">Email</p></td>
+        <td><p th:text="#{orgFormTitle}">Organization</p></td>
+        <td><p th:text="#{dateStartText}">Start Date</p></td>
+        <td><p th:text="#{dateEndText}">End date</p></td>
+        <td><p th:text="#{employmentDuration}">Employment duration (days)</p></td>
     </tr>
 
+    <!--iterate through all the resumes-->
     <th:block th:each="aresume:${resumes}">
         <tr>
             <td><p th:text="${aresume.nameFirst}"></p></td>
@@ -31,9 +32,8 @@
     </th:block>
 </table>
 
-<!--initiates a GET back to /addresume-->
-<a href="/addresume"><p th:text="#{addAnotherResume}"></p></a>
-<a href="/index"><p th:text="#{backToHome}"></p></a>
+<a href="/addresume"><p th:text="#{addAnotherResume}">Add another resume</p></a>
+<a href="/index"><p th:text="#{backToHome}">Back to home</p></a>
 
 </body>
 </html>

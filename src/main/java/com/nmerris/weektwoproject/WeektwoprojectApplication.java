@@ -15,6 +15,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
+// TODO: do I need every one of these annotations?
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
